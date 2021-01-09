@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 
 app.use(logger("dev"));
-app.use(require("./routes/routes"))
+
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -20,7 +20,7 @@ app.use(express.static("public"));
 
 // const db = mongojs(databaseUrl, collections);
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { useNewUrlParser: true, useFindAndModify: false});
-
+app.use(require("./routes/routes"))
 
 
 // db.on("error", error => {

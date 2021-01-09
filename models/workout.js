@@ -14,8 +14,8 @@ let WorkoutSchema = new Schema(
             trim: true,
             required: "Enter a exercise"
         },
-        duration: {type: String},
         name: {type: String},
+        duration: {type: Number},
         weight: {type: Number},
         sets: {type: Number},
         reps: {type: Number},

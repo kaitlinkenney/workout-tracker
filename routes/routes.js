@@ -34,21 +34,21 @@ const Workout = require("../models/workout");
   });
   
 
-  router.put("/api/workouts/:id", ({ body, params}, res) => {
-      Workout.findByIdAndUpdate(
+  router.put("/api/workouts/:id", ({body, params}, res)=>  {
+    Workout.findByIdAndUpdate(
       params.id,
-        {
-            $push:
-             { exercises: body }
-        },
-      )
-      .then(dbWork => {
-        res.json(dbWork);
-      })
-      .catch(err => {
-        res.json(err);
-      });
-  });
+      {
+        $push: {exercises: body}
+      }
+    )
+    .then(dbWork => {
+      res.json(dbWork);
+    })
+    .catch(err => {
+      res.json(err);
+    })
+  })
+
 
 router.post("/api/workouts", (req, res) => {
     Workout.create({})
@@ -61,10 +61,6 @@ router.post("/api/workouts", (req, res) => {
         res.json(err);
       });
   });
-
-// router.put("/api/workouts/:id", (req, res) {
-
-// })
 
 // router.post("/api/workouts", ({ body }, res) => {
 //   Workout.create(body)
@@ -86,6 +82,6 @@ router.get("/api/workouts/range", (req, res) => {
       });
 })
 
-// }
+//}
 
 module.exports = router;
