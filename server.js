@@ -19,7 +19,9 @@ app.use(express.static("public"));
 // const collections = ["workouts"];
 
 // const db = mongojs(databaseUrl, collections);
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workoutsdb", { useNewUrlParser: true });
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { useNewUrlParser: true, useFindAndModify: false});
+
+
 
 // db.on("error", error => {
 //   console.log("Database Error:", error);
