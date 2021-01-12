@@ -177,6 +177,7 @@ function generatePalette() {
     let totals = [];
   
     data.forEach((workout) => {
+      console.log(workout);
       const workoutTotal = workout.exercises.reduce((total, { type, weight }) => {
         if (type === 'resistance') {
           return total + weight;
