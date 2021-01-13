@@ -20,9 +20,19 @@ const Workout = require("../models/workout");
 
   router.get("/api/workouts", (req, res) => {
     Workout.find()
-    // .then(
-    //   Workout.aggregate([
-      //     {$match: {
+      Workout.aggregate([
+      {
+        $addFields: {
+          totalDuration: { $sum: "$exercises.duration" },
+        }
+      },
+    
+    //   $addFields {
+    //     totalDuration: {
+    //       $sum: exercises.duration
+    //     },
+    //   }
+       //     {$match: {
       //       _id: mongoose.Types.ObjectId
       //     }},
         //   { $group: {
@@ -30,8 +40,8 @@ const Workout = require("../models/workout");
         //     total: { $sum: "$duration"}
         //   }
         //   }
-        // ])
-  // )
+      ])
+  //)
       .then(dbWork => {
         console.log(dbWork);
         res.json(dbWork);
@@ -41,25 +51,6 @@ const Workout = require("../models/workout");
       });
   });
 
-  // Workout.aggregate([
-  //   {$match: {
-  //     _id: mongoose.Types.ObjectId
-  //   }},
-  //   { $group: {
-  //     _id: "$_id",
-  //     total: { $sum: "$WorkoutSchema.exercises.duration"}
-  //   }
-  //   }
-  // ])
-
-// Workout.mapReduce(
-//   function() { emit(this._id, this.duration);},
-//   function(key, values) { return Array.sum(values)},
-//   {
-//     query: {_id: 'mongoose.Types.ObjectId'},
-//     out: "Total Workout Duration"
-//   }
-// )
 
   router.put("/api/workouts/:id", ({body, params}, res)=>  {
     Workout.findByIdAndUpdate(
@@ -99,3 +90,25 @@ router.get("/api/workouts/range", (req, res) => {
 })
 
 module.exports = router;
+
+
+
+// Workout.aggregate([
+  //   {$match: {
+  //     _id: mongoose.Types.ObjectId
+  //   }},
+  //   { $group: {
+  //     _id: "$_id",
+  //     total: { $sum: "$WorkoutSchema.exercises.duration"}
+  //   }
+  //   }
+  // ])
+
+// Workout.mapReduce(
+//   function() { emit(this._id, this.duration);},
+//   function(key, values) { return Array.sum(values)},
+//   {
+//     query: {_id: 'mongoose.Types.ObjectId'},
+//     out: "Total Workout Duration"
+//   }
+// )
