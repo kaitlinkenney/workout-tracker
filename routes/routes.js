@@ -26,22 +26,7 @@ const Workout = require("../models/workout");
           totalDuration: { $sum: "$exercises.duration" },
         }
       },
-    
-    //   $addFields {
-    //     totalDuration: {
-    //       $sum: exercises.duration
-    //     },
-    //   }
-       //     {$match: {
-      //       _id: mongoose.Types.ObjectId
-      //     }},
-        //   { $group: {
-        //     _id: mongoose.Types.ObjectId,
-        //     total: { $sum: "$duration"}
-        //   }
-        //   }
       ])
-  //)
       .then(dbWork => {
         console.log(dbWork);
         res.json(dbWork);
@@ -80,35 +65,22 @@ router.post("/api/workouts", (req, res) => {
   });
 
 router.get("/api/workouts/range", (req, res) => {
-  Workout.find({})
+  Workout.aggregate([
+    {
+      $addFields: {
+        totalDuration: { $sum: "$exercises.duration" },
+      }
+    }
+  ])
+    .sort({ _id: -1})
+    .limit(7)
       .then(dbWork => {
         res.json(dbWork);
       })
       .catch(err => {
         res.json(err);
       });
+
 })
 
 module.exports = router;
-
-
-
-// Workout.aggregate([
-  //   {$match: {
-  //     _id: mongoose.Types.ObjectId
-  //   }},
-  //   { $group: {
-  //     _id: "$_id",
-  //     total: { $sum: "$WorkoutSchema.exercises.duration"}
-  //   }
-  //   }
-  // ])
-
-// Workout.mapReduce(
-//   function() { emit(this._id, this.duration);},
-//   function(key, values) { return Array.sum(values)},
-//   {
-//     query: {_id: 'mongoose.Types.ObjectId'},
-//     out: "Total Workout Duration"
-//   }
-// )
