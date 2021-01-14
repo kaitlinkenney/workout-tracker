@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+//sets the model for a workout in the database
 let WorkoutSchema = new Schema(
     {
         day: {
@@ -16,10 +17,8 @@ let WorkoutSchema = new Schema(
                 },
                 name: {
                     type: String,
-                    // trim: true
                 },
                 duration: { type: Number
-                            // required: true
                 },
                 weight: { type: Number },
                 sets: { type: Number },
@@ -28,13 +27,6 @@ let WorkoutSchema = new Schema(
             }
         ],
     },
-    // {
-    //     toJSON:{
-    //         //include any properties when the data is being
-    //         virtuals: true
-    //     }
-    // }
-
 )
 
 const Workout = mongoose.model("Workout", WorkoutSchema);
