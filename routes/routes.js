@@ -18,6 +18,7 @@ const Workout = require("../models/workout");
     res.sendFile(path.join(__dirname, "../public/stats.html"));
   });
 
+//get the most recent workout
   router.get("/api/workouts", (req, res) => {
     Workout.find()
       Workout.aggregate([
@@ -36,7 +37,7 @@ const Workout = require("../models/workout");
       });
   });
 
-
+//updates a workout to add another exercise 
   router.put("/api/workouts/:id", ({body, params}, res)=>  {
     Workout.findByIdAndUpdate(
       params.id,
@@ -52,7 +53,7 @@ const Workout = require("../models/workout");
     })
   })
 
-
+//creates a new workout collection
 router.post("/api/workouts", (req, res) => {
     Workout.create({})
       .then(dbWork => {
@@ -64,6 +65,8 @@ router.post("/api/workouts", (req, res) => {
       });
   });
 
+
+//gets the durations of workouts for the past 7 days
 router.get("/api/workouts/range", (req, res) => {
   Workout.aggregate([
     {
